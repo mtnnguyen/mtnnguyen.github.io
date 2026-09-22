@@ -1,9 +1,3 @@
-/*
- * CN Tower line particles, adapted from Martin's supplied animation.
- * Edit SETTINGS to adjust the appearance and pointer response.
- * The original PNG mask and editable SVG are bundled in assets/img/.
- * No dependency, network API, or external image service is required.
- */
 (() => {
   const canvas = document.getElementById("towerCanvas");
   if (!canvas) return;
@@ -14,12 +8,12 @@
   const hint = document.querySelector(".tower-hint");
   const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)");
   const coarsePointer = matchMedia("(pointer: coarse)");
-  const IMG_SRC = "./assets/img/cn-tower.png";
+  const IMG_SRC = "./assets/img/headshot.png";
   const SETTINGS = {
     scale: 0.92,
     alphaThreshold: 40,
-    rowGapDesktop: 4,
-    rowGapMobile: 4,
+    rowGapDesktop: 3,
+    rowGapMobile: 3,
     scatter: 210,
     maxDist: 65,
     repelStrength: 1.6,
@@ -108,15 +102,10 @@
       pixels = offCtx.getImageData(0, 0, width, height).data;
       canvas.dataset.particleSource = "png";
     } catch {
-      // Create a fresh, origin-clean canvas if the image was blocked or tainted.
-      off = document.createElement("canvas");
-      off.width = width;
-      off.height = height;
-      offCtx = off.getContext("2d", { willReadFrequently: true });
-      if (!offCtx) return [];
-      drawFallbackMask(offCtx, width, height);
-      pixels = offCtx.getImageData(0, 0, width, height).data;
-      canvas.dataset.particleSource = "vector-fallback";
+      // Keep the static headshot visible if pixel sampling is unavailable.
+      canvas.dataset.particleSource = "image-fallback";
+      frame.classList.remove("tower-ready");
+      return [];
     }
 
     const rowGap =
@@ -132,7 +121,7 @@
         }
         const brightness =
           (pixels[i] + pixels[i + 1] + pixels[i + 2]) / (3 * 255);
-        const length = Math.round(2 + brightness * 6);
+        const length = 2
         const scatter = animate ? SETTINGS.scatter : 0;
         out.push({
           x: x + (Math.random() - 0.5) * scatter,
@@ -142,7 +131,8 @@
           vx: 0,
           vy: 0,
           length,
-          alpha: 0.52 + brightness * 0.42,
+          color: `rgb(${pixels[i]}, ${pixels[i + 1]}, ${pixels[i + 2]})`,
+          alpha: pixels[i + 3] / 255,
           delay: animate ? Math.random() * 0.25 : 0,
         });
         x += length + 2;
@@ -182,7 +172,7 @@
     let moving = false;
     ctx.clearRect(0, 0, width, height);
     ctx.strokeStyle = accent;
-    ctx.lineWidth = innerWidth <= 600 ? 1.35 : 1.65;
+    ctx.lineWidth = 2
     ctx.lineCap = "round";
     for (const p of particles) {
       const age = elapsed - p.delay;
@@ -236,6 +226,7 @@
         }
       }
       ctx.globalAlpha = p.alpha * fade;
+      ctx.strokeStyle = p.color;
       ctx.beginPath();
       ctx.moveTo(p.x, p.y);
       ctx.lineTo(p.x + p.length, p.y);
@@ -287,9 +278,9 @@
     initialized = true;
     if (hint)
       hint.textContent = reducedMotion.matches
-        ? "A TORONTO PERSPECTIVE"
+        ? ""
         : coarsePointer.matches
-          ? "TOUCH TO EXPLORE"
+          ? ""
           : "MOVE YOUR CURSOR TO EXPLORE";
     schedule();
   }
