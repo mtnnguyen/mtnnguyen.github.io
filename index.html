@@ -1,0 +1,542 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f6f5ef" />
+    <meta
+      name="description"
+      content="Martin Nguyen — Geospatial Data Science and Applied Statistics student at the University of Toronto. Sports analytics, spatial software, and perception."
+    />
+    <title>Martin Nguyen — Data, with direction.</title>
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="./style.css" />
+    <script src="./app.js" defer></script>
+    <script src="./tower-particles.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <!-- SITE NAVIGATION: edit the name, profile links, and menu labels here. -->
+    <header class="site-header">
+      <div class="header-inner">
+        <a class="identity" href="#top" aria-label="Martin Nguyen, home"
+          ><span class="monogram">mn<span>.</span></span
+          ><span>Martin Nguyen</span></a
+        >
+        <button
+          class="menu-toggle"
+          aria-label="Open navigation"
+          aria-expanded="false"
+          aria-controls="main-nav"
+        >
+          <span></span><span></span>
+        </button>
+        <nav id="main-nav" aria-label="Main navigation">
+          <a href="#top" aria-current="location">Home</a
+          ><a href="#about">About</a><a href="#experience">Experience</a
+          ><a href="#work">Projects</a><a href="#contact">Contact</a>
+        </nav>
+        <div class="header-links">
+          <a
+            href="https://github.com/mtnnguyen"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Martin’s GitHub (opens in a new tab)"
+            ><svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.4"
+              aria-hidden="true"
+            >
+              <path
+                d="M8 19c-5 1.5-5-2.5-7-3m14 6v-4c0-1 .1-1.5-.5-2 4.5-.5 6.5-2 6.5-5a5 5 0 0 0-1.5-3.5 5 5 0 0 0 0-3.5s-1.5-.5-4.5 1a15 15 0 0 0-7 0C5 3.5 3.5 4 3.5 4a5 5 0 0 0 0 3.5A5 5 0 0 0 2 11c0 3 2 4.5 6.5 5-.6.5-.5 1-.5 2v4"
+              /></svg></a
+          ><a href="mailto:martin.nguyxn@gmail.com" aria-label="Email Martin"
+            ><svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.4"
+              aria-hidden="true"
+            >
+              <rect x="3" y="5" width="18" height="14" rx="1" />
+              <path d="m3 6 9 7 9-7" /></svg
+          ></a>
+        </div>
+      </div>
+    </header>
+    <main id="main" class="shell">
+      <!-- INTRODUCTION: the first content visitors see. -->
+      <section class="hero" id="top" aria-labelledby="hero-title">
+        <figure class="hero-art tower-art" aria-labelledby="tower-caption">
+          <div class="art-eyebrow mono">TORONTO / ONTARIO</div>
+          <div class="tower-frame">
+            <img
+              class="tower-fallback"
+              src="./assets/img/cn-tower.svg"
+              alt=""
+              aria-hidden="true"
+              width="360"
+              height="640"
+            />
+            <canvas id="towerCanvas" aria-hidden="true"></canvas>
+          </div>
+          <figcaption id="tower-caption" class="art-caption mono">
+            CN TOWER <span class="tower-hint">A TORONTO PERSPECTIVE</span>
+          </figcaption>
+        </figure>
+        <div class="hero-copy">
+          <div class="eyebrow">
+            <span class="status-dot"></span> UNIVERSITY OF TORONTO · TORONTO, ON
+          </div>
+          <h1 id="hero-title">Hi, I’m <em>Martin.</em></h1>
+          <p class="hero-tagline">Data, with a sense of direction.</p>
+          <p class="hero-intro">
+            I study data science and statistics, and build things that make data
+            easier to explore. My interests sit where sports analytics, spatial
+            thinking, and useful software meet.
+          </p>
+          <a class="primary-button" href="#work"
+            >Explore my work <span aria-hidden="true">↗</span></a
+          >
+          <p class="availability">
+            <span class="status-dot"></span> Looking ahead to Summer 2027
+            internships
+          </p>
+        </div>
+      </section>
+
+      <!-- ABOUT: biography and toolkit. Experience content is in app.js. -->
+      <section class="about-section" id="about" aria-labelledby="about-title">
+        <div class="section-heading">
+          <h2 id="about-title"><span aria-hidden="true">/</span> about me</h2>
+          <span class="heading-line"></span
+          ><span class="section-number mono">01</span>
+        </div>
+        <div class="about-grid">
+          <div class="about-copy">
+            <p>
+              I’m a
+              <strong>Geospatial Data Science and Applied Statistics</strong>
+              student at the University of Toronto Mississauga. I like asking
+              questions about the real world, then finding ways to explore them
+              with data.
+            </p>
+            <p>
+              That curiosity has taken me from a mobile development role at
+              <a href="#experience" data-select-experience="surveilone"
+                >SurveilOne</a
+              >
+              to cone annotation with
+              <a href="#experience" data-select-experience="utfr"
+                >UTFR’s Deep Learning Perception team</a
+              >. Along the way, I’ve built projects around basketball and
+              geographic context.
+            </p>
+            <p class="toolkit-intro">A few tools I work with:</p>
+            <ul class="toolkit-list">
+              <li>R & RStudio</li>
+              <li>React & JavaScript</li>
+              <li>Flutter & GraphQL</li>
+              <li>Mapbox</li>
+              <li>Roboflow</li>
+              <li>Git</li>
+            </ul>
+            <p class="learning-note">
+              <span class="mono">DEVELOPING</span> Java, SQL, and GIS methods
+              through coursework and independent practice.
+            </p>
+            <p class="personal-note">
+              Outside the code, I’m drawn to sports, running, and exploring new
+              places. My longer-term direction: using data to understand the
+              game.
+            </p>
+          </div>
+          <aside class="study-card" aria-label="Current studies">
+            <div class="study-label mono">CURRENT STUDIES <span>↗</span></div>
+            <div class="study-art" aria-hidden="true">
+              <span class="study-cross">+</span><span class="study-ring"></span
+              ><span class="study-point"></span><span class="study-rule"></span>
+            </div>
+            <p class="study-motto">
+              A little<br />perspective<br /><em>changes a lot.</em>
+            </p>
+            <div class="study-programs">
+              <p>Geospatial Data Science</p>
+              <p>Applied Statistics</p>
+              <span>University of Toronto Mississauga</span>
+            </div>
+          </aside>
+        </div>
+        <div class="experience-block" id="experience">
+          <div class="section-heading">
+            <h2 id="experience-title">
+              <span aria-hidden="true">/</span> experience
+            </h2>
+            <span class="heading-line"></span
+            ><span class="section-number mono">02</span>
+          </div>
+          <div class="experience-layout">
+            <div
+              class="experience-tabs"
+              role="tablist"
+              aria-label="Experience"
+              aria-orientation="vertical"
+            >
+              <button
+                role="tab"
+                id="tab-utfr"
+                aria-controls="experience-panel"
+                aria-selected="true"
+                data-experience="utfr"
+              >
+                UTFR <span>↗</span></button
+              ><button
+                role="tab"
+                id="tab-surveilone"
+                aria-controls="experience-panel"
+                aria-selected="false"
+                tabindex="-1"
+                data-experience="surveilone"
+              >
+                SurveilOne <span>↗</span></button
+              ><button
+                role="tab"
+                id="tab-caf"
+                aria-controls="experience-panel"
+                aria-selected="false"
+                tabindex="-1"
+                data-experience="caf"
+              >
+                CAF Reserve <span>↗</span>
+              </button>
+            </div>
+            <div
+              class="experience-panel"
+              id="experience-panel"
+              role="tabpanel"
+              aria-labelledby="tab-utfr"
+              tabindex="0"
+            ></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- PROJECTS: cards below; carousel and detail content come from app.js. -->
+      <section class="work-section" id="work" aria-labelledby="work-title">
+        <div class="section-heading">
+          <h2 id="work-title">
+            <span aria-hidden="true">/</span> selected projects
+          </h2>
+          <span class="heading-line"></span
+          ><a
+            class="heading-link"
+            href="https://github.com/mtnnguyen"
+            target="_blank"
+            rel="noopener noreferrer"
+            >GitHub <span aria-hidden="true">↗</span></a
+          >
+        </div>
+        <p class="section-intro">
+          A few ways I’ve put my curiosity into practice.
+        </p>
+        <div
+          class="featured-carousel"
+          role="region"
+          aria-roledescription="carousel"
+          aria-label="Featured projects"
+          tabindex="0"
+        >
+          <div
+            id="featured-slide"
+            role="group"
+            aria-roledescription="slide"
+            aria-label="1 of 3"
+          ></div>
+          <div class="carousel-bottom">
+            <div class="carousel-status">
+              <span class="mono" id="carousel-position" aria-live="polite"
+                >01 / 03</span
+              ><span class="carousel-rule"></span
+              ><span class="mono">SELECTED WORK</span>
+            </div>
+            <div class="carousel-controls">
+              <button
+                id="previous-project"
+                aria-label="Previous featured project"
+              >
+                ←</button
+              ><button id="next-project" aria-label="Next featured project">
+                →
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="filter-bar">
+          <div class="filters" role="group" aria-label="Filter projects">
+            <button class="filter active" data-filter="all" aria-pressed="true">
+              All work <span>03</span></button
+            ><button class="filter" data-filter="sports" aria-pressed="false">
+              Sports analytics</button
+            ><button class="filter" data-filter="spatial" aria-pressed="false">
+              Geospatial</button
+            ><button
+              class="filter"
+              data-filter="perception"
+              aria-pressed="false"
+            >
+              Perception
+            </button>
+          </div>
+          <span class="mono filter-count" id="filter-count" aria-live="polite"
+            >3 SELECTED ENTRIES</span
+          >
+        </div>
+        <div class="project-grid">
+          <article
+            class="project-card"
+            data-category="sports"
+            data-project="nba"
+          >
+            <button
+              class="project-open"
+              data-open="nba"
+              aria-label="Explore NBA Space Explorer"
+            >
+              <div class="project-card-top">
+                <span class="mono">01 / SPORTS ANALYTICS</span
+                ><span aria-hidden="true">↗</span>
+              </div>
+              <h3>NBA Space Explorer</h3>
+              <p>
+                Exploring shot quality, spacing, and player styles through a
+                spatial lens.
+              </p>
+              <div class="tags">
+                <span>React</span><span>Vite</span
+                ><span>Data visualization</span>
+              </div>
+              <span class="project-link"
+                >Explore project <span aria-hidden="true">→</span></span
+              >
+            </button>
+          </article>
+          <article
+            class="project-card"
+            data-category="spatial"
+            data-project="northstar"
+          >
+            <button
+              class="project-open"
+              data-open="northstar"
+              aria-label="Explore NorthStar"
+            >
+              <div class="project-card-top">
+                <span class="mono">02 / GEOSPATIAL</span
+                ><span aria-hidden="true">↗</span>
+              </div>
+              <h3>NorthStar</h3>
+              <p>
+                A map-based safety app connecting location, context, and
+                interface design.
+              </p>
+              <div class="tags">
+                <span>React</span><span>Mapbox</span
+                ><span>Spatial interfaces</span>
+              </div>
+              <span class="project-link"
+                >Explore project <span aria-hidden="true">→</span></span
+              >
+            </button>
+          </article>
+          <article
+            class="project-card"
+            data-category="perception"
+            data-project="utfr"
+          >
+            <button
+              class="project-open"
+              data-open="utfr"
+              aria-label="Explore UTFR Deep Learning Perception"
+            >
+              <div class="project-card-top">
+                <span class="mono">03 / PERCEPTION</span
+                ><span aria-hidden="true">↗</span>
+              </div>
+              <h3>UTFR Perception</h3>
+              <p>
+                Bounding boxes and cone labels for a driverless racing
+                perception workflow.
+              </p>
+              <div class="tags">
+                <span>Roboflow</span><span>Image annotation</span>
+              </div>
+              <span class="project-link"
+                >Explore contribution <span aria-hidden="true">→</span></span
+              >
+            </button>
+          </article>
+        </div>
+      </section>
+    </main>
+    <!-- CONTACT: update every email and GitHub link together. -->
+    <footer id="contact" class="shell">
+      <span class="mono footer-eyebrow"
+        >HAVE A QUESTION, AN IDEA, OR AN OPPORTUNITY?</span
+      ><a class="footer-hello" href="mailto:martin.nguyxn@gmail.com"
+        >Let’s connect. <span aria-hidden="true">↗</span></a
+      >
+      <div class="footer-links">
+        <a href="mailto:martin.nguyxn@gmail.com">Email ↗</a
+        ><a
+          href="https://github.com/mtnnguyen"
+          target="_blank"
+          rel="noopener noreferrer"
+          >GitHub ↗</a
+        >
+      </div>
+      <span class="mono copyright">MARTIN NGUYEN · TORONTO · © 2026</span>
+    </footer>
+    <!-- Reused by every project. JavaScript fills the dialog when it opens. -->
+    <dialog id="project-dialog" aria-labelledby="dialog-title">
+      <div class="dialog-header">
+        <span class="mono" id="dialog-kicker"></span
+        ><button class="close-button" aria-label="Close project details">
+          Close <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div id="dialog-body"></div>
+    </dialog>
+    <!-- Original vector illustrations. These are concept graphics, not project screenshots. -->
+    <template id="art-nba"
+      ><div class="project-visual basketball-visual">
+        <div class="visual-top mono">
+          <span>SPACE EXPLORER</span><span>01 ↗</span>
+        </div>
+        <svg class="court-art" viewBox="0 0 360 232" aria-hidden="true">
+          <g fill="none" stroke="#a9bba9" stroke-width="1.3">
+            <path d="M24 212V20H336V212Z" />
+            <path d="M130 20V126H230V20M149 20V126H211V20" />
+            <circle cx="180" cy="126" r="32" />
+            <path
+              d="M45 20V67C45 234 315 234 315 67V20M24 212H336M161 42H199"
+            />
+            <circle cx="180" cy="48" r="7" />
+          </g>
+          <g id="card-shots"></g>
+        </svg>
+        <div class="visual-bottom mono">
+          <span>THE GEOMETRY OF THE GAME</span><span>↗</span>
+        </div>
+      </div></template
+    >
+    <template id="art-northstar"
+      ><div class="project-visual map-visual">
+        <div class="visual-top mono">
+          <span>NORTHSTAR</span><span>02 ↗</span>
+        </div>
+        <svg class="map-art" viewBox="0 0 360 232" aria-hidden="true">
+          <path
+            d="M232-10L280 43L246 91L267 131L215 172L228 242H370V-10Z"
+            fill="#ccdde2"
+          />
+          <g fill="#dbe2dc">
+            <path
+              d="M26 30H77V65H26ZM90 30H132V65H90ZM145 30H203V65H145ZM26 80H77V124H26ZM90 80H132V124H90ZM145 80H201V124H145ZM26 139H77V185H26ZM90 139H132V185H90ZM146 139H197V170H146ZM26 199H77V240H26ZM90 199H132V240H90ZM146 186H197V232H146Z"
+            />
+          </g>
+          <path
+            d="M0 72H239M0 132H255M84 0V240M139 0V240M0 192H221M209 0V240"
+            stroke="#fbfcf7"
+            stroke-width="7"
+            fill="none"
+          />
+          <path
+            d="M43 168H84V72H176"
+            stroke="#6c8788"
+            stroke-width="18"
+            opacity=".12"
+            fill="none"
+          />
+          <path
+            d="M43 168H84V72H176"
+            stroke="#3d6368"
+            stroke-width="3"
+            fill="none"
+          />
+          <circle
+            cx="43"
+            cy="168"
+            r="6"
+            fill="#f5f7f1"
+            stroke="#3d6368"
+            stroke-width="2"
+          />
+          <circle cx="176" cy="72" r="7" fill="#3d6368" />
+          <g fill="#819993">
+            <circle cx="119" cy="50" r="3" />
+            <circle cx="164" cy="109" r="3" />
+            <circle cx="60" cy="97" r="3" />
+          </g>
+          <g font-family="monospace" font-size="10" fill="#3d6368">
+            <text x="185" y="61">N</text>
+            <text x="278" y="186" transform="rotate(-35 278 186)">LAKE</text>
+          </g>
+        </svg>
+        <div class="visual-bottom mono">
+          <span>A DIFFERENT VIEW OF THE CITY</span><span>↗</span>
+        </div>
+      </div></template
+    >
+    <template id="art-utfr"
+      ><div class="project-visual perception-visual">
+        <div class="visual-top mono">
+          <span>PERCEPTION / UTFR</span><span>03 ↗</span>
+        </div>
+        <svg class="cone-art" viewBox="0 0 360 232" aria-hidden="true">
+          <path d="M-10 216L176 62H184L370 216Z" fill="#e0dfd6" />
+          <g stroke="#cfcec2" fill="none">
+            <path d="M-10 226L174 67M360 225L188 66M181 74V240" />
+            <path
+              d="M110 123H250M64 167H298M17 210H343"
+              stroke-dasharray="4 5"
+            />
+          </g>
+          <g fill="#b18a39">
+            <path
+              d="M77 171L90 129L103 171ZM130 119L138 92L146 119ZM157 88L162 73L167 88Z"
+            />
+          </g>
+          <g fill="#637e91">
+            <path
+              d="M257 171L270 129L283 171ZM214 119L222 92L230 119ZM193 88L198 73L203 88Z"
+            />
+          </g>
+          <g fill="none" stroke="#536a47" stroke-width="1.3">
+            <path
+              d="M68 120H111V179H68ZM249 120H291V179H249ZM123 84H153V127H123ZM207 84H237V127H207Z"
+            />
+          </g>
+          <g fill="#536a47">
+            <rect x="68" y="109" width="43" height="11" />
+            <rect x="249" y="109" width="42" height="11" />
+          </g>
+          <g fill="#fff" font-family="monospace" font-size="6">
+            <text x="71" y="117">YELLOW CONE</text>
+            <text x="252" y="117">BLUE CONE</text>
+          </g>
+        </svg>
+        <div class="visual-bottom mono">
+          <span>SEEING STARTS WITH GOOD LABELS</span><span>↗</span>
+        </div>
+      </div></template
+    >
+    <noscript
+      ><div class="noscript">
+        Project interactions use JavaScript. Your browser can still display the
+        portfolio and contact links.
+      </div></noscript
+    >
+  </body>
+</html>
