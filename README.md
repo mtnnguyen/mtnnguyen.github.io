@@ -1,1 +1,17 @@
-# mtnnguyen.github.io
+# Martin Nguyen — Personal Portfolio
+
+My personal website showcasing my background, experience, and interests in data science, statistics, sports analytics, and geospatial applications.
+
+**[Visit my portfolio](https://mtnnguyen.github.io/)**
+
+## Technologies
+
+Built with plain HTML, CSS, and JavaScript, with hand-drawn SVG. No frameworks, dependencies, or build step.
+
+## Local Preview
+
+With Python installed, run this from the repository folder:
+
+    python -m http.server 8000
+
+Then visit http://localhost:8000.
