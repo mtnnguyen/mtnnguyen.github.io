@@ -73,31 +73,27 @@ function addShots(target, filter = "all") {
 const experiences = {
   utfr: {
     date: "JOINED FEBRUARY 2026",
-    role: "Deep Learning Perception",
+    role: "Deep Learning Perception Team Member",
     org: "University of Toronto Formula Racing · Driverless",
-    bullets: [
-      "Drew bounding boxes and labelled cones in Roboflow for the team’s perception workflow.",
-      "Contributed to the annotated image data used to support cone detection in driverless racing.",
-    ],
+    description:
+      "Annotated images in Roboflow by drawing bounding boxes and labelling cones for the team’s driverless perception work. Contributed labelled image data to support computer vision models that identify cones marking the race course.",
     link: true,
   },
+
   surveilone: {
-    date: "2025 · MOBILE DEVELOPMENT",
+    date: "2025",
     role: "Mobile Developer",
     org: "SurveilOne Inc.",
-    bullets: [
-      "Worked on a security mobile dashboard using Flutter and GraphQL.",
-      "Gained practical experience developing a mobile interface connected to application data.",
-    ],
+    description:
+      "Worked on a security mobile dashboard using Flutter and GraphQL. Developed mobile interface components and connected them to application data, contributing to an app for viewing security information on mobile devices.",
   },
+
   caf: {
     date: "CANADIAN ARMED FORCES RESERVE",
     role: "Signals Operator",
-    org: "32 Signal Regiment · Toronto",
-    bullets: [
-      "Operated and troubleshot radio and data systems during training.",
-      "Supported communications setup and diagnosed configuration and connectivity issues in time-sensitive environments.",
-    ],
+    org: "32 Signal Regiment · Canadian Armed Forces",
+    description:
+      "Operated and troubleshot radio and data systems during military training. Helped establish communications setups using radios, antennas, and power equipment, and diagnosed frequency, configuration, and connectivity issues to support communication between teams.",
   },
 };
 function selectExperience(key, focus = false) {
@@ -110,7 +106,23 @@ function selectExperience(key, focus = false) {
   });
   const panel = $("#experience-panel");
   panel.setAttribute("aria-labelledby", "tab-" + key);
-  panel.innerHTML = `<p class="experience-date mono">${e.date}</p><h4>${e.role}</h4><p class="experience-org">${e.org}</p><ul>${e.bullets.map((b) => `<li>${b}</li>`).join("")}</ul>${e.link ? '<button class="inline-project" data-open="utfr">Explore the contribution ↗</button>' : ""}`;
+  panel.innerHTML = `
+    <p class="experience-date mono">${e.date}</p>
+    <h4>${e.role}</h4>
+    <p class="experience-org">${e.org}</p>
+
+    <p class="experience-description">
+      ${e.description}
+    </p>
+
+    ${
+      e.link
+        ? `<button class="inline-project" data-open="utfr">
+            Explore the contribution ↗
+          </button>`
+        : ""
+    }
+  `;
 }
 selectExperience("utfr");
 $$(".experience-tabs [role=tab]").forEach((t, i, all) => {

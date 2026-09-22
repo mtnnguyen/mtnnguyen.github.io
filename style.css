@@ -1914,3 +1914,17 @@ body.keyboard-nav :is(a, button, [tabindex]):focus {
   color: var(--muted);
   text-align: center;
 }
+
+.experience-panel .experience-description {
+  margin: 0 0 22px;
+  max-width: 65ch;
+  font-size: 14px;
+  line-height: 1.85;
+  color: var(--muted);
+}
+
+@media (max-width: 600px) {
+  .experience-panel .experience-description {
+    font-size: 13px;
+  }
+}
