@@ -1,31 +1,46 @@
-# My Personal Website
+# Martin Nguyen — Personal Portfolio
 
-Welcome to my personal website repository! This repository contains the source code for my personal website, where you can learn more about me, my projects, and experience.
+My personal website showcasing my background, experience, and interests in data science, statistics, sports analytics, and geospatial applications.
 
-## Website Link
+**[Visit my portfolio](https://mtnnguyen.github.io/)**
 
-You can access my personal website by following this link: [mtnnguyen.github.io](https://mtnnguyen.github.io/)
+## About the Website
 
-## Introduction
+- **About:** My background, interests, and technical toolkit.
+- **Experience:** My work with UTFR, SurveilOne, and the Canadian Armed Forces Reserve.
+- **Projects:** NBA Space Explorer, NorthStar, and my UTFR perception contribution.
+- **Contact:** Links to connect with me.
 
-This website serves as a platform for me to showcase my work, share my experiences, and connect with others interested in Data Science, leadership, and related topics.
+The website includes an interactive particle portrait, project filters, a featured-project carousel, and project detail dialogs.
 
-## Features
+Project previews contain illustrative graphics and synthetic data rather than actual project screenshots or live results.
 
-- **About Me:** Get to know me better through a brief introduction and personal information.
+## Technologies
 
-- **Projects:** Explore the projects I have worked on, complete with descriptions, technologies used, and pictures.
+Built with HTML, CSS, and vanilla JavaScript, using SVG and the Canvas API. No dependencies or build step are required.
 
-- **Experience:** Discover my professional experience through extracurricular involvement.
+## Editing the Website
 
-- **Leadership:** Find out how I advocate for diversity and inclusion in tech through my leadership positions. 
+| Content | File |
+| --- | --- |
+| Introduction, About, toolkit, and contact links | `index.html` |
+| Experience descriptions | `experiences` in `app.js` |
+| Project details and tags | `projects` in `app.js` |
+| Project cards and illustrations | `index.html` |
+| Colours, typography, and layout | `style.css` |
+| Animated portrait | `tower-particles.js` |
+| Photos | `assets/img/` |
 
-- **Contact:** Learn how to get in touch with me, whether through social media or email.
+Keep project information consistent between `index.html` and `app.js`.
 
-## Technologies Used
+## Local Preview
 
-- HTML
-- CSS
-- JavaScript
+With Python installed, run this from the repository folder:
 
-## Thank you for reading!
+    python -m http.server 8000
+
+Then visit http://localhost:8000.
+
+## License
+
+See [LICENSE](LICENSE).
