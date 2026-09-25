@@ -72,28 +72,68 @@ function addShots(target, filter = "all") {
 // EXPERIENCE CONTENT — edit the text inside these entries. Keep the keys stable.
 const experiences = {
   utfr: {
-    date: "JOINED FEBRUARY 2026",
-    role: "Deep Learning Perception Team Member",
+    date: "FEB 2026 – PRESENT",
+    role: "Deep Learning Perception Analyst",
     org: "University of Toronto Formula Racing · Driverless",
     description:
-      "Annotated images in Roboflow by drawing bounding boxes and labelling cones for the team’s driverless perception work. Contributed labelled image data to support computer vision models that identify cones marking the race course.",
-    link: true,
-  },
-
-  surveilone: {
-    date: "2025",
-    role: "Mobile Developer",
-    org: "SurveilOne Inc.",
-    description:
-      "Worked on a security mobile dashboard using Flutter and GraphQL. Developed mobile interface components and connected them to application data, contributing to an app for viewing security information on mobile devices.",
+      "Preparing and reviewing annotated image data for the team’s driverless cone-detection workflow.",
+    tags: ["Roboflow", "Image annotation", "Computer vision"],
+    sections: [
+      [
+        "IMAGE ANNOTATION",
+        "Annotated 60+ images in Roboflow by drawing bounding boxes around track cones, supporting dataset preparation.",
+      ],
+      [
+        "CONE CLASSIFICATION",
+        "Labelled 50+ cones across three categories, providing object location and class annotations for cone-detection model development.",
+      ],
+      [
+        "ANNOTATION REVIEW",
+        "Reviewed 50+ annotated images and corrected bounding-box and classification errors to improve label consistency.",
+      ],
+    ],
   },
 
   caf: {
-    date: "CANADIAN ARMED FORCES RESERVE",
-    role: "Signals Operator",
-    org: "32 Signal Regiment · Canadian Armed Forces",
+    date: "JUN 2025 – PRESENT",
+    role: "Signal Operator",
+    org: "32 Signal Regiment · Canadian Armed Forces Reserve",
     description:
-      "Operated and troubleshot radio and data systems during military training. Helped establish communications setups using radios, antennas, and power equipment, and diagnosed frequency, configuration, and connectivity issues to support communication between teams.",
+      "Supported reliable team communications through radio and data-system operation, equipment setup, and troubleshooting.",
+    tags: ["Communications", "Technical troubleshooting", "Teamwork"],
+    sections: [
+      [
+        "SYSTEM OPERATION",
+        "Operated and troubleshot 20+ radio and data systems in time-sensitive environments.",
+      ],
+      [
+        "COMMUNICATIONS SETUP",
+        "Helped establish field communications setups using multiple equipment categories, including radios, antennas, and power equipment.",
+      ],
+      [
+        "TROUBLESHOOTING",
+        "Diagnosed and resolved communication issues involving frequencies, equipment configuration, and connectivity.",
+      ],
+    ],
+  },
+
+  surveilone: {
+    date: "JUL 2025 – OCT 2025",
+    role: "Mobile Developer Intern",
+    org: "Surveil.One · Remote",
+    description:
+      "Built mobile interfaces and connected application data for an AI-powered monitoring dashboard.",
+    tags: ["Flutter", "Dart", "GraphQL"],
+    sections: [
+      [
+        "MOBILE INTERFACE DEVELOPMENT",
+        "Developed 20+ Flutter screens for an AI-powered monitoring dashboard, translating product requirements into functional mobile interfaces.",
+      ],
+      [
+        "API INTEGRATION",
+        "Integrated GraphQL APIs into the Flutter application to exchange data between the mobile client and backend.",
+      ],
+    ],
   },
 };
 function selectExperience(key, focus = false) {
@@ -115,13 +155,14 @@ function selectExperience(key, focus = false) {
       ${e.description}
     </p>
 
-    ${
-      e.link
-        ? `<button class="inline-project" data-open="utfr">
-            Explore the contribution ↗
-          </button>`
-        : ""
-    }
+    <button
+      type="button"
+      class="inline-project"
+      data-open="${key}"
+      aria-haspopup="dialog"
+    >
+      Explore the contribution ↗
+    </button>
   `;
 }
 selectExperience("utfr");
@@ -217,6 +258,21 @@ const projects = {
     demo: "cones",
   },
 };
+
+// Reuse the existing dialog for every experience.
+Object.entries(experiences).forEach(([key, experience]) => {
+  projects[key] = {
+    ...projects[key],
+    index: "EXPERIENCE",
+    category: experience.org,
+    title: experience.role,
+    summary: experience.description,
+    tags: experience.tags,
+    sections: experience.sections,
+    note: experience.date,
+  };
+});
+
 // Concept demos use synthetic data and original diagrams.
 function makeDemo(type) {
   if (type === "court")
@@ -242,7 +298,7 @@ function openProject(key) {
   opener = document.activeElement;
   $("#dialog-kicker").textContent = `${p.index} / ${p.category}`;
   $("#dialog-body").innerHTML =
-    `<div class="dialog-inner"><h2 id="dialog-title">${p.title}</h2><p class="dialog-summary">${p.summary}</p><div class="tags">${p.tags.map((t) => `<span>${t}</span>`).join("")}</div><div class="detail-grid"><div class="detail-copy">${p.sections.map(([h, t]) => `<h3>${h}</h3><p>${t}</p>`).join("")}</div>${makeDemo(p.demo)}</div><div class="detail-bottom"><span>${p.note}</span><a href="mailto:martin.nguyxn@gmail.com?subject=${encodeURIComponent("Let’s talk about " + p.title)}">Ask me about it ↗</a></div></div>`;
+    `<div class="dialog-inner"><h2 id="dialog-title">${p.title}</h2><p class="dialog-summary">${p.summary}</p><div class="tags">${p.tags.map((t) => `<span>${t}</span>`).join("")}</div><div class="detail-grid ${p.demo ? "" : "detail-grid--text"}"><div class="detail-copy">${p.sections.map(([h, t]) => `<h3>${h}</h3><p>${t}</p>`).join("")}</div>${p.demo ? makeDemo(p.demo) : ""}</div><div class="detail-bottom"><span>${p.note}</span><a href="mailto:martin.nguyxn@gmail.com?subject=${encodeURIComponent("Let’s talk about " + p.title)}">Ask me about it ↗</a></div></div>`;
   if (p.demo === "court") addShots($("#demo-shots"));
   document.body.classList.add("modal-open");
   dialog.showModal();
