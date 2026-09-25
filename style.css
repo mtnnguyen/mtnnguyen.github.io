@@ -2014,3 +2014,11 @@ body.keyboard-nav :is(a, button, [tabindex]):focus {
     transform: none;
   }
 }
+
+.detail-grid.detail-grid--text {
+  grid-template-columns: 1fr;
+}
+
+.detail-grid--text .detail-copy {
+  max-width: 70ch;
+}
