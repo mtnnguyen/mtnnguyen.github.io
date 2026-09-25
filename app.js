@@ -140,28 +140,6 @@ $$(".experience-tabs [role=tab]").forEach((t, i, all) => {
     selectExperience(all[index].dataset.experience, true);
   });
 });
-$$(".filter").forEach((button) =>
-  button.addEventListener("click", () => {
-    const category = button.dataset.filter;
-    $$(".filter").forEach((b) => {
-      const active = b === button;
-      b.classList.toggle("active", active);
-      b.setAttribute("aria-pressed", active);
-    });
-    let count = 0;
-    $$(".project-card").forEach((c) => {
-      c.hidden = category !== "all" && category !== c.dataset.category;
-      if (!c.hidden) count++;
-    });
-    $("#filter-count").textContent =
-      `${count} SELECTED ${count === 1 ? "ENTRY" : "ENTRIES"}`;
-    availableProjects = $$(".project-card")
-      .filter((c) => !c.hidden)
-      .map((c) => c.dataset.project);
-    featuredIndex = 0;
-    renderFeatured();
-  }),
-);
 
 // PROJECT CONTENT — powers the featured carousel and project dialogs.
 // Keep matching cards and art templates in index.html when adding a new key.
@@ -328,41 +306,6 @@ dialog.addEventListener("close", () => {
 });
 const initial = new URLSearchParams(location.search).get("project");
 if (projects[initial]) openProject(initial);
-
-// A manual carousel leaves the pace of exploration with the visitor.
-let availableProjects = Object.keys(projects);
-let featuredIndex = 0;
-function renderFeatured() {
-  const key = availableProjects[featuredIndex],
-    p = projects[key];
-  const slide = $("#featured-slide");
-  slide.setAttribute(
-    "aria-label",
-    `${featuredIndex + 1} of ${availableProjects.length}: ${p.title}`,
-  );
-  const art = $("#art-" + key).innerHTML;
-  slide.innerHTML = `<div class="featured-content"><div class="featured-art" aria-label="Illustrative concept graphic for ${p.title}">${art}</div><div class="featured-copy"><p class="featured-kicker mono">${p.category}</p><h3>${key === "utfr" ? "UTFR Perception" : p.title}</h3><p class="featured-summary">${p.summary}</p><div class="tags">${p.tags.map((t) => `<span>${t}</span>`).join("")}</div><button class="featured-open" data-featured-open="${key}">Explore ${key === "utfr" ? "contribution" : "project"} <span aria-hidden="true">↗</span></button></div></div>`;
-  if (key === "nba") addShots($("#card-shots", slide));
-  $("#carousel-position").textContent =
-    `${String(featuredIndex + 1).padStart(2, "0")} / ${String(availableProjects.length).padStart(2, "0")}`;
-  $("#previous-project").disabled = availableProjects.length < 2;
-  $("#next-project").disabled = availableProjects.length < 2;
-}
-function advanceProject(direction) {
-  featuredIndex =
-    (featuredIndex + direction + availableProjects.length) %
-    availableProjects.length;
-  renderFeatured();
-}
-$("#previous-project").addEventListener("click", () => advanceProject(-1));
-$("#next-project").addEventListener("click", () => advanceProject(1));
-$(".featured-carousel").addEventListener("keydown", (e) => {
-  if (e.key === "ArrowLeft" || e.key === "ArrowRight") {
-    e.preventDefault();
-    advanceProject(e.key === "ArrowRight" ? 1 : -1);
-  }
-});
-renderFeatured();
 
 // Mobile navigation and orientation-aware experience tabs.
 const menu = $(".menu-toggle"),

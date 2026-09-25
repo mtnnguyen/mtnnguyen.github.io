@@ -249,141 +249,105 @@
         <p class="section-intro">
           A few ways I’ve put my curiosity into practice.
         </p>
-        <div
-          class="featured-carousel"
-          role="region"
-          aria-roledescription="carousel"
-          aria-label="Featured projects"
-          tabindex="0"
-        >
-          <div
-            id="featured-slide"
-            role="group"
-            aria-roledescription="slide"
-            aria-label="1 of 3"
-          ></div>
-          <div class="carousel-bottom">
-            <div class="carousel-status">
-              <span class="mono" id="carousel-position" aria-live="polite"
-                >01 / 03</span
-              ><span class="carousel-rule"></span
-              ><span class="mono">SELECTED WORK</span>
-            </div>
-            <div class="carousel-controls">
-              <button
-                id="previous-project"
-                aria-label="Previous featured project"
-              >
-                ←</button
-              ><button id="next-project" aria-label="Next featured project">
-                →
-              </button>
-            </div>
-          </div>
-        </div>
-        <div class="filter-bar">
-          <div class="filters" role="group" aria-label="Filter projects">
-            <button class="filter active" data-filter="all" aria-pressed="true">
-              All work <span>03</span></button
-            ><button class="filter" data-filter="sports" aria-pressed="false">
-              Sports analytics</button
-            ><button class="filter" data-filter="spatial" aria-pressed="false">
-              Geospatial</button
-            ><button
-              class="filter"
-              data-filter="perception"
-              aria-pressed="false"
-            >
-              Perception
-            </button>
-          </div>
-          <span class="mono filter-count" id="filter-count" aria-live="polite"
-            >3 SELECTED ENTRIES</span
-          >
-        </div>
-        <div class="project-grid">
-          <article
-            class="project-card"
-            data-category="sports"
-            data-project="nba"
-          >
-            <button
-              class="project-open"
-              data-open="nba"
-              aria-label="Explore NBA Space Explorer"
-            >
-              <div class="project-card-top">
-                <span class="mono">01 / SPORTS ANALYTICS</span
-                ><span aria-hidden="true">↗</span>
-              </div>
+        <div class="portfolio-grid">
+          <article class="portfolio-project">
+            <a class="project-cover"
+              href="https://github.com/mtnnguyen/nba-space-explorer"
+              target="_blank" rel="noopener noreferrer">
+              <img src="./assets/img/nba-cover.gif"
+                  alt="NBA Space Explorer project preview"
+                  width="1600" height="900" loading="lazy" />
+            </a>
+
+            <div class="project-title-row">
               <h3>NBA Space Explorer</h3>
-              <p>
-                Exploring shot quality, spacing, and player styles through a
-                spatial lens.
-              </p>
-              <div class="tags">
-                <span>React</span><span>Vite</span
-                ><span>Data visualization</span>
-              </div>
-              <span class="project-link"
-                >Explore project <span aria-hidden="true">→</span></span
-              >
-            </button>
+              <a href="https://github.com/mtnnguyen/nba-space-explorer"
+                target="_blank" rel="noopener noreferrer"
+                aria-label="View NBA Space Explorer code on GitHub">
+                Code ↗
+              </a>
+            </div>
+
+            <p class="project-stack">React · Vite · SVG</p>
+            <p class="project-description">
+              An interactive basketball shot chart for exploring shot locations,
+              makes and misses, and player or team filters.
+            </p>
           </article>
-          <article
-            class="project-card"
-            data-category="spatial"
-            data-project="northstar"
-          >
-            <button
-              class="project-open"
-              data-open="northstar"
-              aria-label="Explore NorthStar"
-            >
-              <div class="project-card-top">
-                <span class="mono">02 / GEOSPATIAL</span
-                ><span aria-hidden="true">↗</span>
-              </div>
+
+          <article class="portfolio-project">
+            <a class="project-cover"
+              href="https://github.com/mtnnguyen/NorthStarSpurHacks"
+              target="_blank" rel="noopener noreferrer">
+              <img src="./assets/img/northstar-cover.gif"
+                  alt="NorthStar project preview"
+                  width="1600" height="900" loading="lazy" />
+            </a>
+
+            <div class="project-title-row">
               <h3>NorthStar</h3>
-              <p>
-                A map-based safety app connecting location, context, and
-                interface design.
-              </p>
-              <div class="tags">
-                <span>React</span><span>Mapbox</span
-                ><span>Spatial interfaces</span>
-              </div>
-              <span class="project-link"
-                >Explore project <span aria-hidden="true">→</span></span
-              >
-            </button>
+              <a href="https://github.com/mtnnguyen/NorthStarSpurHacks"
+                target="_blank" rel="noopener noreferrer"
+                aria-label="View NorthStar code on GitHub">
+                Code ↗
+              </a>
+            </div>
+
+            <p class="project-stack">Next.js · React · Mapbox</p>
+            <p class="project-description">
+              A mapping application for exploring Toronto crime-data layers
+              and comparing route options using geographic risk scores.
+            </p>
           </article>
-          <article
-            class="project-card"
-            data-category="perception"
-            data-project="utfr"
-          >
-            <button
-              class="project-open"
-              data-open="utfr"
-              aria-label="Explore UTFR Deep Learning Perception"
-            >
-              <div class="project-card-top">
-                <span class="mono">03 / PERCEPTION</span
-                ><span aria-hidden="true">↗</span>
-              </div>
-              <h3>UTFR Perception</h3>
-              <p>
-                Bounding boxes and cone labels for a driverless racing
-                perception workflow.
-              </p>
-              <div class="tags">
-                <span>Roboflow</span><span>Image annotation</span>
-              </div>
-              <span class="project-link"
-                >Explore contribution <span aria-hidden="true">→</span></span
-              >
-            </button>
+
+          <article class="portfolio-project">
+            <a class="project-cover"
+              href="https://github.com/mtnnguyen/Pablo"
+              target="_blank" rel="noopener noreferrer">
+              <img src="./assets/img/pablo-cover.gif"
+                  alt="Pablo presentation assistant project preview"
+                  width="1600" height="900" loading="lazy" />
+            </a>
+
+            <div class="project-title-row">
+              <h3>Pablo</h3>
+              <a href="https://github.com/mtnnguyen/Pablo"
+                target="_blank" rel="noopener noreferrer"
+                aria-label="View Pablo code on GitHub">
+                Code ↗
+              </a>
+            </div>
+
+            <p class="project-stack">Python · OpenCV · MediaPipe · Streamlit</p>
+            <p class="project-description">
+              A presentation assistant that tracks head movement, hand gestures,
+              and posture to provide feedback on practice sessions.
+            </p>
+          </article>
+
+          <article class="portfolio-project">
+            <a class="project-cover"
+              href="https://github.com/mtnnguyen/TrashMap"
+              target="_blank" rel="noopener noreferrer">
+              <img src="./assets/img/trashmap-cover.gif"
+                  alt="TrashMap waste identification project preview"
+                  width="1600" height="900" loading="lazy" />
+            </a>
+
+            <div class="project-title-row">
+              <h3>TrashMap</h3>
+              <a href="https://github.com/mtnnguyen/TrashMap"
+                target="_blank" rel="noopener noreferrer"
+                aria-label="View TrashMap code on GitHub">
+                Code ↗
+              </a>
+            </div>
+
+            <p class="project-stack">Python · Streamlit · Google Cloud Vision</p>
+            <p class="project-description">
+              A web application that identifies waste items from photos and
+              helps users explore disposal instructions and locations.
+            </p>
           </article>
         </div>
       </section>
