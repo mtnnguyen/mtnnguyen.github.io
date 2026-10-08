@@ -76,20 +76,20 @@ const experiences = {
     role: "Deep Learning Perception Analyst",
     org: "University of Toronto Formula Racing · Driverless",
     description:
-      "Preparing and reviewing annotated image data for the team’s driverless cone-detection workflow.",
+      "I prepare training data and run cone-classification experiments for UTFR’s autonomous race car.",
     tags: ["Roboflow", "Image annotation", "Computer vision"],
     sections: [
       [
         "IMAGE ANNOTATION",
-        "Annotated 60+ images in Roboflow by drawing bounding boxes around track cones, supporting dataset preparation.",
+        "Annotate cone images in Roboflow and review bounding boxes and class labels for consistency.",
       ],
       [
         "CONE CLASSIFICATION",
-        "Labelled 50+ cones across three categories, providing object location and class annotations for cone-detection model development.",
+        "Set up input-resolution experiments to investigate how image size affects cone-classification performance.",
       ],
       [
         "ANNOTATION REVIEW",
-        "Reviewed 50+ annotated images and corrected bounding-box and classification errors to improve label consistency.",
+        "Run classifier training on the Nibi GPU cluster through SLURM and track validation results in Weights & Biases.",
       ],
     ],
   },
@@ -99,7 +99,7 @@ const experiences = {
     role: "Signal Operator",
     org: "32 Signal Regiment · Canadian Armed Forces Reserve",
     description:
-      "Supported reliable team communications through radio and data-system operation, equipment setup, and troubleshooting.",
+      "I set up, operate, and troubleshoot field communications equipment with 32 Signal Regiment, helping teams stay connected during training.",
     tags: ["Communications", "Technical troubleshooting", "Teamwork"],
     sections: [
       [
