@@ -185,29 +185,28 @@ $$(".experience-tabs [role=tab]").forEach((t, i, all) => {
 // PROJECT CONTENT — powers the featured carousel and project dialogs.
 // Keep matching cards and art templates in index.html when adding a new key.
 const projects = {
-  nba: {
+  playermatch: {
     index: "01",
-    category: "SPORTS ANALYTICS / PERSONAL PROJECT",
-    title: "NBA Space Explorer",
+    category: "SPORTS ANALYTICS / MACHINE LEARNING",
+    title: "PlayerMatch",
     summary:
-      "An interactive spatial analytics project exploring basketball through shot quality, spacing, and player styles.",
-    tags: ["React", "Vite", "Data visualization"],
+      "An interpretable NBA analytics project combining player similarity, development analysis, archetype discovery, and next-season forecasting.",
+    tags: ["Python", "scikit-learn", "React", "NBA API"],
     sections: [
       [
         "THE QUESTION",
-        "How can a spatial view of the court make basketball patterns easier to explore? NBA Space Explorer brings my interest in sports together with the way I think about geography and statistics.",
+        "How similar are NBA players statistically, how do those similarities change over time, and how much can historical performance tell us about the following season?",
       ],
       [
         "THE PROJECT",
-        "A React and Vite application focused on interactive exploration of NBA shot quality, spacing, and player styles. The court provides a shared visual frame for asking questions about the game.",
+        "PlayerMatch compares players using weighted cosine similarity across standardized basketball features, maps player styles with PCA, identifies statistical archetypes with K-means, and evaluates next-season forecasts using historical backtesting.",
       ],
       [
-        "WHY IT BELONGS HERE",
-        "It connects my interests in sports analytics, spatial data, and interface development. It is the direction I want to keep building toward as a data science student.",
+        "THE FINDING",
+        "More model complexity did not automatically produce better forecasts. Ridge Regression remained competitive across all five forecasting targets, while the improvement over a simple persistence baseline depended heavily on the statistic being predicted.",
       ],
     ],
-    note: "Personal project · Sports and spatial analytics",
-    demo: "court",
+    note: "Personal research project · NBA analytics and forecasting",
   },
   northstar: {
     index: "02",
