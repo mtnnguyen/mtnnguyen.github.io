@@ -40,7 +40,6 @@
   --line-x: calc(var(--pad) + var(--aside) + var(--gap));
   --inset: 56px; /* space between the line and a split's content */
   --time-col: 150px;
-  --focus-col: 220px;
   color-scheme: light;
 }
 :root[data-theme="dark"] {
@@ -430,7 +429,7 @@ details dd { font-family: var(--serif); font-size: 16px; line-height: 1.55; }
   .masthead nav .nav-resume { display: none; }
   .masthead-resume { display: inline-flex; align-items: center; gap: 5px; margin-left: auto; padding: 6px 12px; font-size: 13px; font-weight: 700; border: 1px solid var(--ink); border-radius: 999px; }
   .course { grid-template-columns: minmax(0, 1fr); }
-  .sports-bg { opacity: 0.09; }
+  .sports-bg, :root[data-theme="dark"] .sports-bg { opacity: 0.09; }
   .sp-1 { left: auto; right: -40px; top: 12%; width: 190px; }
   .sp-2 { right: -50px; top: 36%; width: 170px; }
   .sp-3 { display: none; }
