@@ -6,7 +6,7 @@ My personal website showcasing my background, experience, and interests in data 
 
 ## Technologies
 
-Built with HTML, CSS, & JS, using SVG and the Canvas API. No dependencies or build step are required.
+Built with plain HTML, CSS, and JavaScript, with hand-drawn SVG. No frameworks, dependencies, or build step.
 
 ## Local Preview
 

@@ -19,7 +19,7 @@
 
     document.querySelector('meta[name="theme-color"]')?.setAttribute(
       "content",
-      theme === "dark" ? "#171c19" : "#f6f5ef"
+      theme === "dark" ? "#1a1b1a" : "#f4f5f2"
     );
 
     const button = document.getElementById("theme-toggle");
@@ -35,6 +35,15 @@
   }
 
   applyTheme(resolveTheme());
+
+  // Pack-opening intro: plays once per visit. Hide the page until app.js takes over,
+  // with a safety timeout so the page can never stay hidden.
+  try {
+    if (!sessionStorage.getItem("pack-opened") && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      root.classList.add("pack-pending");
+      setTimeout(() => root.classList.remove("pack-pending"), 4000);
+    }
+  } catch {}
 
   systemTheme.addEventListener("change", () => {
     if (!preference) applyTheme(resolveTheme());

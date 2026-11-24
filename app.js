@@ -1,497 +1,248 @@
 /*
- * Martin Nguyen — portfolio interactions
- * No libraries, API keys, build step, or backend are required.
+ * Martin Nguyen — page behaviour. No libraries or build step.
  *
- * EDIT CONTENT: find `const experiences` and `const projects` below.
- * EDIT PAGE TEXT: open index.html.
- * EDIT COLORS / LAYOUT: open style.css.
+ * 1. The course line runs from the top of the page to the finish line.
+ * 2. As you scroll, the line paints itself down to the reading position.
+ * 3. The nav marks the section currently in view.
+ * 4. Side Quests lists recent films from assets/data/letterboxd.json.
+ * 5. The player card tilts toward the pointer and catches the light.
+ * 6. First visit per session: a quick pack-opening intro that reveals the card.
  *
- * $ selects one HTML element; $$ selects a list of HTML elements.
- * These helpers are local shortcuts, not jQuery.
+ * EDIT CONTENT in index.html. EDIT COLORS AND LAYOUT in style.css.
  */
+(() => {
+  const course = document.querySelector(".course");
+  const line = document.querySelector(".course-line");
+  const finish = document.querySelector(".finish-line");
+  if (!course || !line) return;
 
-const $ = (selector, scope = document) => scope.querySelector(selector);
-const $$ = (selector, scope = document) => [
-  ...scope.querySelectorAll(selector),
-];
-const svgNS = "http://www.w3.org/2000/svg";
+  const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)");
+  let lineTop = 0;
+  let lineLen = 0;
+  const dots = [...course.querySelectorAll(".split, .quest")];
+  let dotYs = [];
 
-// Fixed, synthetic locations for the concept preview. Not player or team data.
-const shots = [
-  [171, 55, 1],
-  [186, 68, 1],
-  [160, 75, 0],
-  [195, 87, 1],
-  [182, 98, 1],
-  [156, 100, 0],
-  [206, 60, 0],
-  [167, 120, 1],
-  [212, 131, 0],
-  [112, 92, 1],
-  [99, 121, 0],
-  [250, 98, 1],
-  [247, 146, 0],
-  [65, 58, 1],
-  [54, 94, 0],
-  [72, 152, 1],
-  [96, 184, 0],
-  [139, 196, 1],
-  [190, 201, 0],
-  [229, 188, 1],
-  [290, 151, 0],
-  [304, 92, 1],
-  [310, 54, 0],
-  [142, 61, 1],
-  [205, 108, 0],
-  [177, 81, 1],
-  [187, 58, 1],
-  [163, 90, 0],
-  [118, 147, 1],
-  [274, 64, 0],
-].map(([x, y, made], index) => ({ x, y, made: !!made, index }));
-function addShots(target, filter = "all") {
-  target.replaceChildren();
-  const selected = shots.filter(
-    (s) => filter === "all" || (filter === "made" ? s.made : !s.made),
-  );
-  selected.forEach((s) => {
-    const c = document.createElementNS(svgNS, "circle");
-    Object.entries({
-      cx: s.x,
-      cy: s.y,
-      r: s.made ? 3.7 : 3.2,
-      fill: s.made ? "#345c42" : "none",
-      stroke: s.made ? "#345c42" : "#9cae8f",
-      "stroke-width": 1.2,
-    }).forEach(([k, v]) => c.setAttribute(k, v));
-    target.append(c);
-  });
-  return selected.length;
-}
-
-// EXPERIENCE CONTENT — edit the text inside these entries. Keep the keys stable.
-const experiences = {
-  utfr: {
-    date: "FEB 2026 – PRESENT",
-    role: "Deep Learning Perception Analyst",
-    org: "University of Toronto Formula Racing · Driverless",
-    description:
-      "I prepare training data and run cone-classification experiments for UTFR’s autonomous race car.",
-    tags: ["Roboflow", "Image annotation", "Computer vision"],
-    sections: [
-      [
-        "IMAGE ANNOTATION",
-        "Annotate cone images in Roboflow and review bounding boxes and class labels for consistency.",
-      ],
-      [
-        "CONE CLASSIFICATION",
-        "Set up input-resolution experiments to investigate how image size affects cone-classification performance.",
-      ],
-      [
-        "ANNOTATION REVIEW",
-        "Run classifier training on the Nibi GPU cluster through SLURM and track validation results in Weights & Biases.",
-      ],
-    ],
-  },
-
-  caf: {
-    date: "JUN 2025 – PRESENT",
-    role: "Signal Operator",
-    org: "32 Signal Regiment · Canadian Armed Forces Reserve",
-    description:
-      "I set up, operate, and troubleshoot field communications equipment with 32 Signal Regiment, helping teams stay connected during training.",
-    tags: ["Communications", "Technical troubleshooting", "Teamwork"],
-    sections: [
-      [
-        "SYSTEM OPERATION",
-        "Operated and troubleshot 20+ radio and data systems in time-sensitive environments.",
-      ],
-      [
-        "COMMUNICATIONS SETUP",
-        "Helped establish field communications setups using multiple equipment categories, including radios, antennas, and power equipment.",
-      ],
-      [
-        "TROUBLESHOOTING",
-        "Diagnosed and resolved communication issues involving frequencies, equipment configuration, and connectivity.",
-      ],
-    ],
-  },
-
-  surveilone: {
-    date: "JUL 2025 – OCT 2025",
-    role: "Mobile Developer Intern",
-    org: "Surveil.One · Remote",
-    description:
-      "Built mobile interfaces and connected application data for an AI-powered monitoring dashboard.",
-    tags: ["Flutter", "Dart", "GraphQL"],
-    sections: [
-      [
-        "MOBILE INTERFACE DEVELOPMENT",
-        "Developed 20+ Flutter screens for an AI-powered monitoring dashboard, translating product requirements into functional mobile interfaces.",
-      ],
-      [
-        "API INTEGRATION",
-        "Integrated GraphQL APIs into the Flutter application to exchange data between the mobile client and backend.",
-      ],
-    ],
-  },
-};
-function selectExperience(key, focus = false) {
-  const e = experiences[key];
-  $$(".experience-tabs [role=tab]").forEach((t) => {
-    const active = t.dataset.experience === key;
-    t.setAttribute("aria-selected", active);
-    t.tabIndex = active ? 0 : -1;
-    if (active && focus) t.focus();
-  });
-  const panel = $("#experience-panel");
-  panel.setAttribute("aria-labelledby", "tab-" + key);
-  panel.innerHTML = `
-    <p class="experience-date mono">${e.date}</p>
-    <h4>${e.role}</h4>
-    <p class="experience-org">${e.org}</p>
-
-    <p class="experience-description">
-      ${e.description}
-    </p>
-
-    <button
-      type="button"
-      class="inline-project"
-      data-open="${key}"
-      aria-haspopup="dialog"
-    >
-      Explore the contribution ↗
-    </button>
-  `;
-}
-selectExperience("utfr");
-$$(".experience-tabs [role=tab]").forEach((t, i, all) => {
-  t.addEventListener("click", () => selectExperience(t.dataset.experience));
-  t.addEventListener("keydown", (e) => {
-    let index;
-    if (e.key === "ArrowRight" || e.key === "ArrowDown")
-      index = (i + 1) % all.length;
-    else if (e.key === "ArrowLeft" || e.key === "ArrowUp")
-      index = (i - 1 + all.length) % all.length;
-    else if (e.key === "Home") index = 0;
-    else if (e.key === "End") index = all.length - 1;
-    else return;
-    e.preventDefault();
-    selectExperience(all[index].dataset.experience, true);
-  });
-});
-
-// PROJECT CONTENT — powers the featured carousel and project dialogs.
-// Keep matching cards and art templates in index.html when adding a new key.
-const projects = {
-  playermatch: {
-    index: "01",
-    category: "SPORTS ANALYTICS / MACHINE LEARNING",
-    title: "PlayerMatch",
-    summary:
-      "An interpretable NBA analytics project combining player similarity, development analysis, archetype discovery, and next-season forecasting.",
-    tags: ["Python", "scikit-learn", "React", "NBA API"],
-    sections: [
-      [
-        "THE QUESTION",
-        "How similar are NBA players statistically, how do those similarities change over time, and how much can historical performance tell us about the following season?",
-      ],
-      [
-        "THE PROJECT",
-        "PlayerMatch compares players using weighted cosine similarity across standardized basketball features, maps player styles with PCA, identifies statistical archetypes with K-means, and evaluates next-season forecasts using historical backtesting.",
-      ],
-      [
-        "THE FINDING",
-        "More model complexity did not automatically produce better forecasts. Ridge Regression remained competitive across all five forecasting targets, while the improvement over a simple persistence baseline depended heavily on the statistic being predicted.",
-      ],
-    ],
-    note: "Personal research project · NBA analytics and forecasting",
-  },
-  northstar: {
-    index: "02",
-    category: "GEOSPATIAL / PERSONAL PROJECT",
-    title: "NorthStar",
-    summary:
-      "A map-based safety application built with React and Mapbox, bringing geographic context into an interactive interface.",
-    tags: ["React", "Mapbox", "Spatial interfaces"],
-    sections: [
-      [
-        "THE QUESTION",
-        "How can location and context become easier to understand through a map? NorthStar explores a safety-focused use case for an interactive spatial interface.",
-      ],
-      [
-        "THE PROJECT",
-        "A React application using Mapbox for its mapping experience. The project connects application development with my interest in geography and how people understand a place.",
-      ],
-      [
-        "WHY IT BELONGS HERE",
-        "It demonstrates the intersection of software and geospatial work in my portfolio. Its focus on location and context is a foundation I can build on through my geospatial studies.",
-      ],
-    ],
-    note: "Personal project · Geographic context",
-    demo: "map",
-  },
-  utfr: {
-    index: "03",
-    category: "COMPUTER VISION / TEAM CONTRIBUTION",
-    title: "UTFR Deep Learning Perception",
-    summary:
-      "Contributing cone annotations to the driverless perception workflow at University of Toronto Formula Racing.",
-    tags: ["Roboflow", "Bounding boxes", "Image annotation"],
-    sections: [
-      [
-        "THE CONTEXT",
-        "A driverless race car needs to interpret its surroundings. Cone detection is one part of that perception problem, and annotated images help define the objects the system needs to recognize.",
-      ],
-      [
-        "MY CONTRIBUTION",
-        "I drew bounding boxes and labelled cones in Roboflow. My contribution was image annotation for the Deep Learning Perception team.",
-      ],
-      [
-        "WHAT I TAKE FROM IT",
-        "Working on labels connects individual examples to the larger computer vision workflow. My role has given me a practical view of the data preparation that supports a perception system.",
-      ],
-    ],
-    note: "Team contribution · Joined February 2026",
-    demo: "cones",
-  },
-};
-
-// Reuse the existing dialog for every experience.
-Object.entries(experiences).forEach(([key, experience]) => {
-  projects[key] = {
-    ...projects[key],
-    index: "EXPERIENCE",
-    category: experience.org,
-    title: experience.role,
-    summary: experience.description,
-    tags: experience.tags,
-    sections: experience.sections,
-    note: experience.date,
-  };
-});
-
-// Concept demos use synthetic data and original diagrams.
-function makeDemo(type) {
-  if (type === "court")
-    return `<div class="demo"><div class="demo-label mono"><span>CONCEPT PREVIEW</span><span>SHOT EXPLORER</span></div><svg viewBox="0 0 360 232" role="img" aria-label="Interactive court displaying synthetic shot positions"><g fill="none" stroke="#a9bba9" stroke-width="1.3"><path d="M24 212V20H336V212ZM130 20V126H230V20M149 20V126H211V20"/><circle cx="180" cy="126" r="32"/><path d="M45 20V67C45 234 315 234 315 67V20M161 42H199"/><circle cx="180" cy="48" r="7"/></g><g id="demo-shots"></g></svg><div class="mini-legend"><span><i></i>Made</span><span><i></i>Missed</span></div><div class="demo-controls" role="group" aria-label="Filter illustrative shots"><button data-shot="all" aria-pressed="true">All shots</button><button data-shot="made" aria-pressed="false">Made</button><button data-shot="missed" aria-pressed="false">Missed</button></div><p class="demo-result" id="shot-result" aria-live="polite">30 illustrative shots shown</p><p class="demo-disclaimer">Synthetic sample created for this portfolio preview. Not real NBA data or a screenshot of the original project.</p></div>`;
-  if (type === "map")
-    return `<div class="demo"><div class="demo-label mono"><span>CONCEPT PREVIEW</span><span>SPATIAL LAYERS</span></div><svg viewBox="0 0 360 245" role="img" aria-label="Illustrative city map with toggleable context and path layers"><rect width="360" height="245" fill="#edf0e7"/><path d="M263 0L283 59L251 112L268 175L244 245H360V0Z" fill="#cedfe3"/><g fill="#d7dfd1"><path d="M20 20H76V65H20ZM93 20H134V65H93ZM151 20H226V65H151ZM20 82H76V127H20ZM93 82H134V127H93ZM151 82H226V127H151ZM20 144H76V189H20ZM93 144H134V189H93ZM151 144H226V189H151ZM20 206H76V245H20ZM93 206H134V245H93ZM151 206H226V245H151Z"/></g><g class="demo-context" fill="#6f9170"><circle cx="52" cy="110" r="7"/><circle cx="177" cy="41" r="7"/><circle cx="180" cy="169" r="7"/><circle cx="110" cy="225" r="7"/></g><g class="map-route"><path d="M47 196H85V73H189" fill="none" stroke="#3d6368" stroke-width="3"/><circle cx="47" cy="196" r="6" fill="#edf0e7" stroke="#3d6368" stroke-width="2"/><circle cx="189" cy="73" r="6" fill="#3d6368"/></g></svg><div class="demo-controls" role="group" aria-label="Toggle illustrative map layers"><button data-layer="demo-context" aria-pressed="true">Context points</button><button data-layer="map-route" aria-pressed="true">Example path</button></div><p class="demo-result" id="map-result" aria-live="polite">2 illustrative layers visible</p><p class="demo-disclaimer">Illustrative map and path, created for this portfolio. Not live location data, a safety assessment, or navigation guidance.</p></div>`;
-  const source = $("#art-utfr").content.querySelector(".cone-art").innerHTML;
-  return `<div class="demo"><div class="demo-label mono"><span>CONCEPT PREVIEW</span><span>ANNOTATION LAYER</span></div><svg viewBox="0 0 360 232" role="img" aria-label="Illustrative cones with bounding boxes">${source.split('<g fill="none" stroke="#536a47"')[0]}<g class="annotation-labels"><g fill="none" stroke="#536a47" stroke-width="1.3"><path d="M68 120H111V179H68ZM249 120H291V179H249ZM123 84H153V127H123ZM207 84H237V127H207Z"/></g><g fill="#536a47"><rect x="68" y="107" width="55" height="13"/><rect x="249" y="107" width="50" height="13"/></g><g fill="#fff" font-family="monospace" font-size="7"><text x="71" y="116">YELLOW CONE</text><text x="252" y="116">BLUE CONE</text></g></g></svg><div class="demo-controls"><button data-annotations aria-pressed="true">Bounding boxes on</button></div><p class="demo-result" id="annotation-result" aria-live="polite">Annotation layer visible</p><p class="demo-disclaimer">Original schematic created for this portfolio. It illustrates bounding boxes and is not UTFR training imagery or model output.</p></div>`;
-}
-const dialog = $("#project-dialog");
-let opener = null;
-function setProjectURL(key) {
-  // A double-click preview uses file://. Shareable links are enabled on HTTP(S).
-  if (location.protocol === "file:") return;
-  const u = new URL(location.href);
-  if (key) u.searchParams.set("project", key);
-  else u.searchParams.delete("project");
-  history.replaceState(null, "", u);
-}
-function openProject(key) {
-  const p = projects[key];
-  if (!p) return;
-  opener = document.activeElement;
-  $("#dialog-kicker").textContent = `${p.index} / ${p.category}`;
-  $("#dialog-body").innerHTML =
-    `<div class="dialog-inner"><h2 id="dialog-title">${p.title}</h2><p class="dialog-summary">${p.summary}</p><div class="tags">${p.tags.map((t) => `<span>${t}</span>`).join("")}</div><div class="detail-grid ${p.demo ? "" : "detail-grid--text"}"><div class="detail-copy">${p.sections.map(([h, t]) => `<h3>${h}</h3><p>${t}</p>`).join("")}</div>${p.demo ? makeDemo(p.demo) : ""}</div><div class="detail-bottom"><span>${p.note}</span><a href="mailto:martin.nguyxn@gmail.com?subject=${encodeURIComponent("Let’s talk about " + p.title)}">Ask me about it ↗</a></div></div>`;
-  if (p.demo === "court") addShots($("#demo-shots"));
-  document.body.classList.add("modal-open");
-  dialog.showModal();
-  dialog.scrollTop = 0;
-  $(".close-button").focus();
-  setProjectURL(key);
-}
-document.addEventListener("click", (e) => {
-  const open = e.target.closest("[data-open], [data-featured-open]");
-  if (open) {
-    openProject(open.dataset.open || open.dataset.featuredOpen);
-    return;
+  // Stop the line where the finish line crosses it.
+  function measure() {
+    const courseTop = course.getBoundingClientRect().top + scrollY;
+    lineTop = courseTop;
+    lineLen = finish
+      ? finish.getBoundingClientRect().top + scrollY - courseTop
+      : course.offsetHeight;
+    line.style.setProperty("--line-len", `${Math.max(lineLen, 0)}px`);
+    // Each dot is the row's ::before; its centre is its top plus half its height.
+    dotYs = dots.map((d) => {
+      const dot = getComputedStyle(d, "::before");
+      const centre = parseFloat(dot.top) + parseFloat(dot.height) / 2 || 44;
+      return d.getBoundingClientRect().top + scrollY - courseTop + centre;
+    });
+    paint();
   }
-  const experience = e.target.closest("[data-select-experience]");
-  if (experience) selectExperience(experience.dataset.selectExperience);
-  const shot = e.target.closest("[data-shot]");
-  if (shot) {
-    $$("[data-shot]").forEach((b) =>
-      b.setAttribute("aria-pressed", b === shot),
-    );
-    const n = addShots($("#demo-shots"), shot.dataset.shot);
-    $("#shot-result").textContent =
-      `${n} illustrative ${shot.dataset.shot === "all" ? "shots" : shot.dataset.shot + " shots"} shown`;
-  }
-  const layer = e.target.closest("[data-layer]");
-  if (layer) {
-    const on = layer.getAttribute("aria-pressed") !== "true";
-    layer.setAttribute("aria-pressed", on);
-    $("." + layer.dataset.layer, dialog).toggleAttribute("hidden", !on);
-    const n = $$("[data-layer][aria-pressed=true]").length;
-    $("#map-result").textContent =
-      `${n} illustrative ${n === 1 ? "layer" : "layers"} visible`;
-  }
-  const annotations = e.target.closest("[data-annotations]");
-  if (annotations) {
-    const on = annotations.getAttribute("aria-pressed") !== "true";
-    annotations.setAttribute("aria-pressed", on);
-    annotations.textContent = `Bounding boxes ${on ? "on" : "off"}`;
-    $(".annotation-labels", dialog).toggleAttribute("hidden", !on);
-    $("#annotation-result").textContent =
-      `Annotation layer ${on ? "visible" : "hidden"}`;
-  }
-});
-$(".close-button").addEventListener("click", () => dialog.close());
-dialog.addEventListener("click", (e) => {
-  if (e.target === dialog) {
-    const r = dialog.getBoundingClientRect();
-    if (
-      e.clientX < r.left ||
-      e.clientX > r.right ||
-      e.clientY < r.top ||
-      e.clientY > r.bottom
-    )
-      dialog.close();
-  }
-});
-dialog.addEventListener("close", () => {
-  document.body.classList.remove("modal-open");
-  setProjectURL(null);
-  if (opener && opener.isConnected) opener.focus({ preventScroll: true });
-});
-const initial = new URLSearchParams(location.search).get("project");
-if (projects[initial]) openProject(initial);
 
-// Mobile navigation and orientation-aware experience tabs.
-const menu = $(".menu-toggle"),
-  nav = $("#main-nav"),
-  mobileQuery = matchMedia("(max-width:600px)");
-function closeMenu(restoreFocus = false) {
-  menu.setAttribute("aria-expanded", "false");
-  menu.setAttribute("aria-label", "Open navigation");
-  nav.classList.remove("is-open");
-  if (restoreFocus) menu.focus();
-}
-menu.addEventListener("click", () => {
-  const open = menu.getAttribute("aria-expanded") !== "true";
-  menu.setAttribute("aria-expanded", open);
-  menu.setAttribute(
-    "aria-label",
-    open ? "Close navigation" : "Open navigation",
-  );
-  nav.classList.toggle("is-open", open);
-});
-document.addEventListener("keydown", (e) => {
-  if (e.key === "Escape" && menu.getAttribute("aria-expanded") === "true")
-    closeMenu(true);
-});
-function updateTabOrientation() {
-  $(".experience-tabs").setAttribute(
-    "aria-orientation",
-    mobileQuery.matches ? "horizontal" : "vertical",
-  );
-  if (!mobileQuery.matches) closeMenu();
-}
-mobileQuery.addEventListener("change", updateTabOrientation);
-updateTabOrientation();
-// One shared anchor handler: sticky-header offset, focus, and usable URL hashes.
-const header = $(".site-header");
-const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)");
-let headerOffset = 95;
-function updateHeaderOffset() {
-  headerOffset = Math.ceil(header.getBoundingClientRect().height) + 20;
-  document.documentElement.style.setProperty(
-    "--anchor-offset",
-    `${headerOffset}px`,
-  );
-}
-new ResizeObserver(updateHeaderOffset).observe(header);
-updateHeaderOffset();
-function anchorTarget(href) {
-  if (!href || href === "#" || !href.startsWith("#")) return null;
-  try {
-    return document.getElementById(decodeURIComponent(href.slice(1)));
-  } catch {
-    return null;
-  }
-}
-document.addEventListener("click", (event) => {
-  const link = event.target.closest('a[href^="#"]');
-  if (
-    !link ||
-    event.defaultPrevented ||
-    event.button !== 0 ||
-    event.metaKey ||
-    event.ctrlKey ||
-    event.shiftKey ||
-    event.altKey ||
-    link.hasAttribute("download") ||
-    (link.target && link.target !== "_self")
-  )
-    return;
-  const href = link.getAttribute("href");
-  const target = anchorTarget(href);
-  if (!target) return;
-  event.preventDefault();
-  closeMenu();
-  updateHeaderOffset();
-  if (!target.hasAttribute("tabindex")) target.setAttribute("tabindex", "-1");
-  target.focus({ preventScroll: true });
-  if (location.protocol !== "file:" && location.hash !== href) {
-    history.pushState(null, "", href);
-  }
-  window.scrollTo({
-    top: Math.max(
-      0,
-      target.getBoundingClientRect().top + scrollY - headerOffset,
-    ),
-    behavior: reducedMotion.matches ? "instant" : "smooth",
-  });
-});
-
-// Keep the CSS focus-visible fallback and provide an explicit keyboard mode.
-document.addEventListener("keydown", (event) => {
-  if (event.key === "Tab") document.body.classList.add("keyboard-nav");
-});
-document.addEventListener(
-  "pointerdown",
-  () => document.body.classList.remove("keyboard-nav"),
-  { passive: true },
-);
-
-// Experience is a div and Contact is a footer, so use actual nav destinations.
-const navTargets = $$("a", nav)
-  .map((link) => ({
-    link,
-    target: anchorTarget(link.getAttribute("href")),
-  }))
-  .filter((item) => item.target);
-let scrollPending = false;
-function updateActiveNav() {
-  let active = navTargets[0];
-  const trigger = headerOffset + 8;
-  navTargets.forEach((item) => {
-    if (item.target.getBoundingClientRect().top <= trigger) active = item;
-  });
-  if (scrollY + innerHeight >= document.documentElement.scrollHeight - 8)
-    active = navTargets.at(-1);
-  navTargets.forEach((item) => {
-    item.link.classList.toggle("active", item === active);
-    if (item === active) item.link.setAttribute("aria-current", "location");
-    else item.link.removeAttribute("aria-current");
-  });
-  scrollPending = false;
-}
-addEventListener(
-  "scroll",
-  () => {
-    if (!scrollPending) {
-      scrollPending = true;
-      requestAnimationFrame(updateActiveNav);
+  // The painted part reaches 60% down the viewport, so the line leads the reader.
+  function paint() {
+    if (reducedMotion.matches || !lineLen) {
+      course.classList.remove("is-painting");
+      line.style.setProperty("--paint", "1");
+      return;
     }
-  },
-  { passive: true },
-);
-addEventListener("resize", updateActiveNav);
-addEventListener("hashchange", updateActiveNav);
-updateActiveNav();
+    course.classList.add("is-painting");
+    // At the bottom of the page the line always reaches the finish.
+    const atEnd = scrollY + innerHeight >= document.documentElement.scrollHeight - 4;
+    const reach = atEnd ? lineLen : scrollY + innerHeight * 0.6 - lineTop;
+    const progress = Math.min(Math.max(reach / lineLen, 0), 1);
+    line.style.setProperty("--paint", progress.toFixed(4));
+    // A dot fills once the paint has reached it.
+    dots.forEach((d, i) => d.classList.toggle("is-reached", reach >= dotYs[i]));
+  }
+
+  let queued = false;
+  function onScroll() {
+    if (queued) return;
+    queued = true;
+    requestAnimationFrame(() => {
+      queued = false;
+      paint();
+    });
+  }
+
+  measure();
+  addEventListener("scroll", onScroll, { passive: true });
+  addEventListener("resize", measure);
+  addEventListener("load", measure);
+  reducedMotion.addEventListener("change", paint);
+  if ("ResizeObserver" in window) new ResizeObserver(measure).observe(course);
+
+  // Mark the nav link for the section in view.
+  const links = [...document.querySelectorAll('.masthead nav a[href^="#"]')];
+  const sections = links
+    .map((a) => document.querySelector(a.getAttribute("href")))
+    .filter(Boolean);
+  if (!("IntersectionObserver" in window) || !sections.length) return;
+
+  const visible = new Map();
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((e) => visible.set(e.target, e.isIntersecting));
+      const current = sections.find((s) => visible.get(s));
+      links.forEach((a) => {
+        const on = current && a.getAttribute("href") === `#${current.id}`;
+        if (on) a.setAttribute("aria-current", "true");
+        else a.removeAttribute("aria-current");
+      });
+    },
+    { rootMargin: "-35% 0px -55% 0px" },
+  );
+  sections.forEach((s) => observer.observe(s));
+})();
+
+// Recent films, synced from Letterboxd by .github/workflows/letterboxd.yml.
+(() => {
+  const list = document.querySelector("[data-films]");
+  if (!list) return;
+
+  // Letterboxd ratings are 0.5–5 in half steps; draw them the way Letterboxd does.
+  const stars = (r) => (r ? "★".repeat(Math.floor(r)) + (r % 1 ? "½" : "") : "");
+
+  fetch("./assets/data/letterboxd.json", { cache: "no-cache" })
+    .then((res) => (res.ok ? res.json() : Promise.reject(res.status)))
+    .then((data) => {
+      const films = (data.films || []).slice(0, 4);
+      if (!films.length) return;
+      films.forEach((f) => {
+        const li = document.createElement("li");
+        li.className = "film";
+        const a = document.createElement("a");
+        a.href = f.url;
+        a.target = "_blank";
+        a.rel = "noopener noreferrer";
+        if (f.poster) {
+          const img = document.createElement("img");
+          img.src = f.poster;
+          img.alt = `${f.title} poster`;
+          img.loading = "lazy";
+          img.width = 230;
+          img.height = 345;
+          a.append(img);
+        }
+        const h = document.createElement("h4");
+        h.textContent = f.title;
+        if (f.year) {
+          const y = document.createElement("span");
+          y.textContent = ` ${f.year}`;
+          h.append(y);
+        }
+        a.append(h);
+        li.append(a);
+        if (f.rating) {
+          const r = document.createElement("p");
+          r.className = "film-rating";
+          r.textContent = stars(f.rating);
+          r.setAttribute("aria-label", `${f.rating} out of 5`);
+          li.append(r);
+        }
+        if (f.review) {
+          const p = document.createElement("p");
+          p.className = "film-review";
+          p.textContent = f.review;
+          li.append(p);
+        }
+        list.append(li);
+      });
+    })
+    .catch(() => {});
+})();
+
+// Player card shine: tilt toward the pointer, move the glare and foil with it.
+(() => {
+  const card = document.querySelector(".pc");
+  const glare = document.getElementById("pc-glare");
+  if (!card || !glare) return;
+  const reduced = matchMedia("(prefers-reduced-motion: reduce)");
+  const MAX_TILT = 9; // degrees
+
+  function move(e) {
+    const r = card.getBoundingClientRect();
+    const x = Math.min(Math.max((e.clientX - r.left) / r.width, 0), 1);
+    const y = Math.min(Math.max((e.clientY - r.top) / r.height, 0), 1);
+    card.classList.add("is-tilting");
+    // The glare sits where the pointer is, in the card's 300 × 420 drawing space.
+    glare.setAttribute("cx", (x * 300).toFixed(1));
+    glare.setAttribute("cy", (y * 420).toFixed(1));
+    card.style.setProperty("--foil-x", `${((x - 0.5) * 160).toFixed(1)}px`);
+    card.style.setProperty("--foil-y", `${((y - 0.5) * 160).toFixed(1)}px`);
+    if (!reduced.matches) {
+      card.style.setProperty("--ry", `${((x - 0.5) * 2 * MAX_TILT).toFixed(2)}deg`);
+      card.style.setProperty("--rx", `${((0.5 - y) * 2 * MAX_TILT).toFixed(2)}deg`);
+    }
+  }
+  function leave() {
+    card.classList.remove("is-tilting");
+    card.style.setProperty("--rx", "0deg");
+    card.style.setProperty("--ry", "0deg");
+  }
+  card.addEventListener("pointermove", move);
+  card.addEventListener("pointerleave", leave);
+  card.addEventListener("pointercancel", leave);
+})();
+
+// Pack-opening intro. theme.js adds .pack-pending when it should play.
+(() => {
+  const root = document.documentElement;
+  if (!root.classList.contains("pack-pending")) return;
+  const card = document.querySelector(".pc");
+  if (!card) { root.classList.remove("pack-pending"); return; }
+
+  const pack = document.createElement("div");
+  pack.className = "pack";
+  pack.setAttribute("role", "dialog");
+  pack.setAttribute("aria-label", "Opening pack. Press any key to skip.");
+  pack.innerHTML = `
+    <div class="pack-burst" aria-hidden="true"></div>
+    <div class="pack-stage" aria-hidden="true">
+      <div class="pack-flip">
+        <div class="pack-back">
+          <svg viewBox="0 0 300 420">
+            <defs><linearGradient id="pack-back-fill" x1="0" y1="0" x2="0.4" y2="1"><stop offset="0" stop-color="#2a3d8f"/><stop offset="1" stop-color="#0d1a4d"/></linearGradient></defs>
+            <path d="M34 18C74 18 98 10 116 2Q150-4 184 2C202 10 226 18 266 18L300 44V356Q300 378 278 386L162 417Q150 421 138 417L22 386Q0 378 0 356V44Z" fill="url(#pack-back-fill)" stroke="rgba(255,255,255,.7)" stroke-width="4"/>
+            <path d="M40 30C78 30 102 22 119 14Q150 9 181 14C198 22 222 30 260 30L288 50V352Q288 368 272 374L160 404Q150 407 140 404L28 374Q12 368 12 352V50Z" fill="none" stroke="rgba(255,255,255,.3)" stroke-width="1.2"/>
+            <rect x="110" y="170" width="80" height="80" rx="12" fill="#1f4fd1"/>
+            <path transform="translate(110 170) scale(1.25)" d="M13 51V13h10l9 17 9-17h10v38h-9V30l-7 13h-6l-7-13v21Z" fill="#fff"/>
+          </svg>
+        </div>
+        <div class="pack-front"></div>
+      </div>
+    </div>
+    <p class="pack-caption" aria-live="polite">Opening pack…</p>
+    <button type="button" class="pack-skip">Skip</button>`;
+
+  // The front is a copy of the real card, minus ids so nothing is duplicated.
+  const front = card.cloneNode(true);
+  front.querySelectorAll("[id]").forEach((el) => el.removeAttribute("id"));
+  pack.querySelector(".pack-front").append(front);
+  document.body.append(pack);
+
+  const caption = pack.querySelector(".pack-caption");
+  const timers = [];
+  let finished = false;
+  function finish() {
+    if (finished) return;
+    finished = true;
+    timers.forEach(clearTimeout);
+    try { sessionStorage.setItem("pack-opened", "1"); } catch {}
+    // Fade the overlay out first, then bring the page in, so the two never overlap.
+    pack.classList.add("is-done");
+    setTimeout(() => {
+      pack.remove();
+      root.classList.remove("pack-pending");
+    }, 360);
+    removeEventListener("keydown", finish);
+  }
+
+  requestAnimationFrame(() => pack.classList.add("is-playing"));
+  timers.push(setTimeout(() => { caption.innerHTML = "<b>Martin Nguyen</b> · 87 CAM"; }, 1050));
+  timers.push(setTimeout(finish, 2000));
+  pack.addEventListener("click", finish);
+  addEventListener("keydown", finish);
+})();
+
