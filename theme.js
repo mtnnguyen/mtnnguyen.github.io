@@ -36,15 +36,6 @@
 
   applyTheme(resolveTheme());
 
-  // Pack-opening intro: plays once per visit. Hide the page until app.js takes over,
-  // with a safety timeout so the page can never stay hidden.
-  try {
-    if (!sessionStorage.getItem("pack-opened") && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      root.classList.add("pack-pending");
-      setTimeout(() => root.classList.remove("pack-pending"), 4000);
-    }
-  } catch {}
-
   systemTheme.addEventListener("change", () => {
     if (!preference) applyTheme(resolveTheme());
   });
