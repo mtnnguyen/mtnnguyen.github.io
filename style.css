@@ -215,6 +215,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .prose-block p { font-family: var(--serif); font-size: 18px; line-height: 1.65; max-width: 60ch; margin-top: 1em; }
 .prose-block .lede { font-size: 23px; line-height: 1.45; margin-top: 0; }
 .kit { margin-top: 36px; }
+.kit ul + h3 { margin-top: 24px; }
 .kit h3 { font-size: 15px; font-weight: 700; color: var(--ink); padding-bottom: 10px; border-bottom: 2px solid var(--ink); }
 .kit ul { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: 24px; }
 .kit li { padding: 10px 0; border-bottom: 1px solid var(--rule); font-weight: 500; }
@@ -270,6 +271,8 @@ details dd { font-family: var(--serif); font-size: 16px; line-height: 1.55; }
 .project:hover .project-cover img { transform: scale(1.025); }
 .project h3 { font-size: 24px; font-weight: 700; line-height: 1.2; letter-spacing: -0.01em; margin-top: 16px; }
 .project > p:not(.project-foot) { font-family: var(--serif); font-size: 16px; line-height: 1.5; margin-top: 8px; color: var(--ink-2); }
+.project > p.project-stack { font-family: var(--sans); font-size: 13px; color: var(--ink-3); margin-top: 10px; }
+.project p a { text-decoration: underline; text-decoration-color: var(--blue); text-underline-offset: 3px; }
 .project-foot { display: flex; align-items: center; gap: 18px; margin-top: auto; padding-top: 16px; }
 .project .gh { display: grid; place-items: center; width: 36px; height: 36px; border: 1px solid var(--rule); border-radius: 50%; transition: border-color 0.2s ease-out, color 0.2s ease-out; }
 .project .gh svg { width: 18px; height: 18px; }

@@ -51,7 +51,7 @@
         <h1 id="hero-title"><span class="bib-first">Martin<span class="bib-num" aria-hidden="true">’28</span></span> <span class="bib-last">Nguyen</span></h1>
         <p class="bib-program">Data Science + Statistics</p>
         <p class="bib-intro">Hey, welcome! Feel free to scroll around.</p>
-        <p class="bib-status">Looking for Summer 2027 internships.</p>
+        <p class="bib-status">Looking for Summer 2027 internships in data science, machine learning, and analytics.</p>
         <p class="bib-tag">University of Toronto · Toronto, ON</p>
         <div class="bib-actions">
           <a class="link-strong" href="#work">See my projects<svg class="ico" aria-hidden="true"><use href="#i-down"/></svg></a>
@@ -66,12 +66,16 @@
           <h2 class="leg-title" id="about-title">About</h2>
           <div class="about">
             <div class="prose-block">
-              <p class="lede">I’m a student at the University of Toronto, double majoring in Data Science and Statistics. I’m interested in how data helps explain what happens around us, especially in sports and mapping.</p>
+              <p class="lede">I’m a student at the University of Toronto, double majoring in Data Science and Statistics. Most of what I work on is machine learning and data analysis in Python, and I’m especially into sports and mapping.</p>
               <p>In summer 2026, I did my Developmental Period 1 in Halifax, Nova Scotia, training as a Signal Operator with the Canadian Armed Forces Reserves: setting up and troubleshooting communications equipment.</p>
               <p>I’m working toward a career in data &amp; sports analytics, while continuing to develop my skills in statistics, programming, and GIS. Away from my laptop, I enjoy running, following sports, and exploring new places.</p>
               <div class="kit">
-                <h3>A few tools I work with</h3>
-                <ul><li>Python</li><li>R &amp; RStudio</li><li>SQL</li><li>JavaScript</li><li>Git &amp; GitHub</li><li>Excel</li></ul>
+                <h3>ML &amp; data</h3>
+                <ul><li>Python</li><li>pandas</li><li>scikit-learn</li><li>YOLO &amp; Roboflow</li><li>OpenCV</li><li>Weights &amp; Biases</li></ul>
+                <h3>Stats &amp; analysis</h3>
+                <ul><li>R &amp; RStudio</li><li>SQL</li><li>Excel</li><li>ArcGIS</li></ul>
+                <h3>Engineering</h3>
+                <ul><li>Git &amp; GitHub</li><li>SLURM &amp; GPU clusters</li><li>FastAPI</li><li>JavaScript</li></ul>
                 <p><b>Still learning:</b> Java, Power BI, Tableau, and GIS methods, through coursework and independent practice.</p>
               </div>
             </div>
@@ -133,13 +137,13 @@
               <div class="split-body">
                 <h3>Deep Learning Perception Analyst</h3>
                 <p class="split-meta">University of Toronto Formula Racing · Driverless · <span>Feb 2026 – now</span></p>
-                <p>I prepare training data and run cone-classification experiments for UTFR’s autonomous race car.</p>
+                <p>I build and evaluate training data for the cone-detection model on UTFR’s driverless race car, and run experiments on how input resolution affects classification.</p>
                 <details>
                   <summary><svg class="ico" aria-hidden="true"><use href="#i-plus"/></svg>More on this</summary>
                   <dl>
-                    <dt>Image annotation</dt><dd>Annotate cone images in Roboflow and review bounding boxes and class labels for consistency.</dd>
-                    <dt>Cone classification</dt><dd>Set up input-resolution experiments to investigate how image size affects cone-classification performance.</dd>
-                    <dt>Annotation review</dt><dd>Run classifier training on the Nibi GPU cluster through SLURM and track validation results in Weights &amp; Biases.</dd>
+                    <dt>Data labelling</dt><dd>Annotate cone images in Roboflow and audit bounding boxes and class labels for consistency before training.</dd>
+                    <dt>Experiments</dt><dd>Design input-resolution experiments to measure how image size affects cone-classification accuracy.</dd>
+                    <dt>Training runs</dt><dd>Run classifier training on the Nibi GPU cluster through SLURM and track validation metrics in Weights &amp; Biases.</dd>
                   </dl>
                 </details>
               </div>
@@ -186,6 +190,7 @@
               <a class="project-cover" href="https://askpulp.com" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true"><img src="./assets/img/pulp-cover.gif" alt="" width="960" height="540" loading="lazy" /></a>
               <h3>PULP</h3>
               <p>A financial resilience planner that stress-tests a bank account against life’s shocks and builds a plan to follow. Built with a team of four for the Sheridan Datathon 2026.</p>
+              <p class="project-stack">Python · pandas · FastAPI · React · Gemini agents</p>
               <p class="project-foot">
                 <a class="gh" href="https://github.com/mtnnguyen/pulp" target="_blank" rel="noopener noreferrer"><svg aria-hidden="true"><use href="#i-github"/></svg><span class="visually-hidden">PULP code on GitHub</span></a>
                 <a class="live" href="https://askpulp.com" target="_blank" rel="noopener noreferrer">Try it<svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
@@ -194,7 +199,8 @@
             <li class="project">
               <a class="project-cover project-cover--dark" href="https://playermatch.vercel.app" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true"><img src="./assets/img/playermatch-cover.gif" alt="" width="1600" height="900" loading="lazy" /></a>
               <h3>PlayerMatch</h3>
-              <p>Interpretable NBA player similarity, archetypes, and next-season forecasts. Researched statistical methods for similarity and forecasting, and learned how to pick and justify the right model for the question.</p>
+              <p>Interpretable NBA player similarity, archetypes, and next-season forecasts. Researched statistical methods for similarity and forecasting, and learned how to pick and justify the right model for the question. Models are chosen with expanding-window validation against a baseline, with a <a href="https://github.com/mtnnguyen/PlayerMatch/blob/main/docs/MODEL_CARD.md" target="_blank" rel="noopener noreferrer">model card</a> and <a href="https://github.com/mtnnguyen/PlayerMatch/blob/main/docs/PlayerMatch_Research_Paper.pdf" target="_blank" rel="noopener noreferrer">research paper</a>.</p>
+              <p class="project-stack">Python · scikit-learn · Ridge regression · PCA · K-means</p>
               <p class="project-foot">
                 <a class="gh" href="https://github.com/mtnnguyen/PlayerMatch" target="_blank" rel="noopener noreferrer"><svg aria-hidden="true"><use href="#i-github"/></svg><span class="visually-hidden">PlayerMatch code on GitHub</span></a>
                 <a class="live" href="https://playermatch.vercel.app" target="_blank" rel="noopener noreferrer">Try it<svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
@@ -204,6 +210,7 @@
               <a class="project-cover" href="https://north-star-spur-hacks-five.vercel.app/" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true"><img src="./assets/img/northstar-cover.gif" alt="" width="1600" height="900" loading="lazy" /></a>
               <h3>NorthStar</h3>
               <p>A Toronto crime-data map that compares routes by geographic risk. Integrated public APIs and worked hands-on with the City of Toronto’s open data.</p>
+              <p class="project-stack">Next.js · React · public APIs · Toronto open data</p>
               <p class="project-foot">
                 <a class="gh" href="https://github.com/mtnnguyen/NorthStarSpurHacks" target="_blank" rel="noopener noreferrer"><svg aria-hidden="true"><use href="#i-github"/></svg><span class="visually-hidden">NorthStar code on GitHub</span></a>
                 <a class="live" href="https://north-star-spur-hacks-five.vercel.app/" target="_blank" rel="noopener noreferrer">Try it<svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
@@ -212,7 +219,8 @@
             <li class="project">
               <a class="project-cover" href="https://github.com/mtnnguyen/Pablo" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true"><img src="./assets/img/pablo-cover.gif" alt="" width="1600" height="900" loading="lazy" /></a>
               <h3>Pablo</h3>
-              <p>A presentation coach that reads your gestures, posture, and head movement. Built the tracking with OpenCV, which sparked my interest in computer vision and led me to UofT Formula Racing.</p>
+              <p>A presentation coach that reads your gestures, posture, and head movement. Built the tracking with OpenCV, which sparked my interest in computer vision and led me to UofT Formula Racing. Won a challenge at QHacks 2025.</p>
+              <p class="project-stack">Python · OpenCV · MediaPipe · Streamlit</p>
               <p class="project-foot">
                 <a class="gh" href="https://github.com/mtnnguyen/Pablo" target="_blank" rel="noopener noreferrer"><svg aria-hidden="true"><use href="#i-github"/></svg><span class="visually-hidden">Pablo code on GitHub</span></a>
               </p>
