@@ -287,6 +287,15 @@ details dd { font-family: var(--serif); font-size: 16px; line-height: 1.55; }
 .quest-pic figcaption { padding-top: 6px; color: var(--ink-3); font-size: 11px; line-height: 1.4; }
 .quest-pic figcaption a { text-decoration: underline; text-underline-offset: 2px; }
 .quest-photo img { aspect-ratio: 16 / 9; }
+.yt a { display: block; }
+.yt-thumb { position: relative; display: block; }
+.quest-pic .yt-thumb img { aspect-ratio: 16 / 9; border-radius: 8px; border: 0; }
+.yt-time { position: absolute; right: 6px; bottom: 6px; padding: 1px 5px; border-radius: 4px; background: rgba(0, 0, 0, 0.8); color: #fff; font-size: 11px; font-weight: 600; }
+.yt-meta { display: flex; gap: 8px; margin-top: 8px; }
+.quest-pic .yt-avatar { width: 28px; height: 28px; aspect-ratio: 1; border-radius: 50%; border: 0; flex: none; }
+.yt-title { display: block; font-size: 14px; font-weight: 600; line-height: 1.3; color: var(--ink); }
+.yt-channel { display: block; font-size: 12px; color: var(--ink-3); margin-top: 2px; }
+.yt a:hover .yt-title { color: var(--blue-ink); }
 .quest-video video { display: block; width: 100%; height: auto; aspect-ratio: 9 / 16; max-height: 360px; object-fit: cover; background: #16181a; border: 1px solid var(--rule); }
 .posters { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
 .posters img { width: 100%; aspect-ratio: 2 / 3; object-fit: cover; border: 1px solid var(--rule); background: var(--chalk-solid); }
