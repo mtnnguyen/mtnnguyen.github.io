@@ -1,8 +1,4 @@
-/*
- * Martin Nguyen — page behaviour. No libraries or build step.
- * 1. The nav marks the section currently in view.
- * 2. The player card tilts slightly toward the pointer.
- */
+// nav highlight + card tilt
 (() => {
   const links = [...document.querySelectorAll('.masthead nav a[href^="#"]')];
   const sections = links
@@ -30,14 +26,13 @@
   const glare = document.getElementById("pc-glare");
   if (!card || !glare) return;
   const reduced = matchMedia("(prefers-reduced-motion: reduce)");
-  const MAX_TILT = 4; // degrees
+  const MAX_TILT = 4;
 
   card.addEventListener("pointermove", (e) => {
     const r = card.getBoundingClientRect();
     const x = Math.min(Math.max((e.clientX - r.left) / r.width, 0), 1);
     const y = Math.min(Math.max((e.clientY - r.top) / r.height, 0), 1);
     card.classList.add("is-tilting");
-    // The glare sits under the pointer, in the card's 300 × 420 drawing space.
     glare.setAttribute("cx", (x * 300).toFixed(1));
     glare.setAttribute("cy", (y * 420).toFixed(1));
     if (!reduced.matches) {

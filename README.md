@@ -6,7 +6,7 @@ My personal website showcasing my background, experience, and interests in data 
 
 ## Technologies
 
-Built with plain HTML, CSS, and JavaScript, with hand-drawn SVG. No frameworks, dependencies, or build step.
+Built with plain HTML, CSS, and JavaScript, No frameworks.
 
 ## Local Preview
 
