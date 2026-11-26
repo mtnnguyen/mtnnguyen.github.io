@@ -296,8 +296,8 @@ details dd { font-family: var(--serif); font-size: 16px; line-height: 1.55; }
 .quest-photo img { aspect-ratio: 16 / 9; }
 .quest-video video { display: block; width: 100%; height: auto; aspect-ratio: 9 / 16; max-height: 360px; object-fit: cover; background: #16181a; border: 1px solid var(--rule); }
 /* Recently watched: a plain row of small posters */
-.posters { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
-.posters img { width: 72px; aspect-ratio: 2 / 3; object-fit: cover; border: 1px solid var(--rule); background: var(--chalk-solid); }
+.posters { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.posters img { width: 100%; aspect-ratio: 2 / 3; object-fit: cover; border: 1px solid var(--rule); background: var(--chalk-solid); }
 
 /* Finish */
 .leg-finish { padding-bottom: 72px; }
